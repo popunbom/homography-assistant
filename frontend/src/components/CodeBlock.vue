@@ -5,16 +5,14 @@
         <file-icon class="icon"></file-icon>
         <span class="file-name">{{ nameWithExtension(code.ext) }}</span>
       </div>
-      <highlight-code :lang="code.lang" class="code">
-        {{ code.contents }}
-      </highlight-code>
+      <highlightjs class="code" :language="code.lang" :code="code.contents" />
     </div>
   </div>
 </template>
 
 <script>
 import FileIcon from "@/assets/octicons/file.svg"
-import "highlight.js/styles/github-gist.css"
+import "highlight.js/styles/github.css"
 
 const zip = rows => rows[0].map((_, c) => rows.map(row => row[c]))
 
