@@ -14,7 +14,7 @@
 import FileIcon from "@/assets/octicons/file.svg"
 import "highlight.js/styles/github.css"
 
-const zip = rows => rows[0].map((_, c) => rows.map(row => row[c]))
+const zip = (rows) => rows[0].map((_, c) => rows.map((row) => row[c]))
 
 export default {
   name: "CodeBlock",
