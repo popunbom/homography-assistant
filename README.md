@@ -8,7 +8,8 @@
   ```bash
   npm install -g yarn
   ```
-- Python ( `>3.6` )
+- Python ( `>3.8` )
+  - Pipenv： `$ pip3 install pipenv`
 
 ## Set-Up
 
@@ -20,8 +21,9 @@ yarn
 
 ### Backend
 ```bash
-cd Backend
-pip3 install -r requirements.txt
+cd backend
+$ pip3 install pipenv
+$ PIPENV_VENV_IN_PROJECT=true pipenv install
 ```
 
 ## Run App
@@ -38,7 +40,7 @@ yarn serve
 ### Backend
 ```bash
 cd backend
-python3 app.py
+pipenv run python3 app.py
 ```
 
 ## Author

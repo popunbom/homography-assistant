@@ -15,12 +15,12 @@ export default {
     pos: {
       type: Object,
       required: true,
-      validator: pos => "x" in pos && "y" in pos,
+      validator: (pos) => "x" in pos && "y" in pos,
     },
     color: {
       type: Object,
       required: true,
-      validator: color => "fg" in color && "bg" in color,
+      validator: (color) => "fg" in color && "bg" in color,
     },
     scale: {
       type: Number,

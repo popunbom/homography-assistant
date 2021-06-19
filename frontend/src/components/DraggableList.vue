@@ -3,7 +3,7 @@
     <draggable
       v-bind="options"
       :value="points"
-      @input="swappedList => $emit('swap', swappedList)"
+      @input="(swappedList) => $emit('swap', swappedList)"
       @start="drag = true"
       @end="drag = false"
     >

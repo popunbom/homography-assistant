@@ -3,7 +3,7 @@ const path = require("path")
 module.exports = {
   outputDir: path.resolve(__dirname, "../backend/dist"),
   assetsDir: "static",
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     const svgRule = config.module.rule("svg")
 
     svgRule.uses.clear()

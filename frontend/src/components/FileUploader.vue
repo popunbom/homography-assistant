@@ -1,13 +1,19 @@
 <template>
   <div class="file-uploader">
     <label
-      :class="{ overlay: canvasVisible, 'in-drop-area': isInDropArea}"
+      :class="{ overlay: canvasVisible, 'in-drop-area': isInDropArea }"
       @dragenter.prevent="handleEnterDropArea"
       @dragleave.prevent="handleLeaveDropArea"
       @dragover.prevent
       @drop.prevent.stop="handleSubmit"
     >
-      <input @change="handleSubmit" name="imgFile" ref="file" style="display:none;" type="file" />
+      <input
+        @change="handleSubmit"
+        name="imgFile"
+        ref="file"
+        style="display: none"
+        type="file"
+      />
     </label>
     <div class="message">Click here or drop file to open image</div>
   </div>
@@ -18,41 +24,41 @@ export default {
   props: {
     canvasVisible: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       dropAreaCounter: 0,
-      isInDropArea: false
-    };
+      isInDropArea: false,
+    }
   },
   methods: {
     handleEnterDropArea() {
-      this.isInDropArea = true;
-      console.debug(`enterDropArea:${this.isInDropArea}`);
+      this.isInDropArea = true
+      console.debug(`enterDropArea:${this.isInDropArea}`)
     },
     handleLeaveDropArea() {
-      this.isInDropArea = false;
-      console.debug(`leaveDropArea:${this.isInDropArea}`);
+      this.isInDropArea = false
+      console.debug(`leaveDropArea:${this.isInDropArea}`)
     },
     handleSubmit(event) {
       const file = event.target.files
         ? event.target.files[0]
-        : event.dataTransfer.files[0];
-      const fileReader = new FileReader();
+        : event.dataTransfer.files[0]
+      const fileReader = new FileReader()
 
-      fileReader.onload = event => {
-        const image = new Image();
+      fileReader.onload = (event) => {
+        const image = new Image()
         image.onload = () => {
-          this.$emit("submit", image);
-        };
-        image.src = event.target.result;
-      };
-      fileReader.readAsDataURL(file);
-    }
-  }
-};
+          this.$emit("submit", image)
+        }
+        image.src = event.target.result
+      }
+      fileReader.readAsDataURL(file)
+    },
+  },
+}
 </script>
 
 <style scoped>

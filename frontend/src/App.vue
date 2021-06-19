@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     extractCoordinatesFromPoints(points) {
-      return points.map(point => Object.values(point.pos))
+      return points.map((point) => Object.values(point.pos))
     },
 
     checkPoints() {
@@ -111,7 +111,7 @@ export default {
           width: baseImage.image.naturalWidth,
           height: baseImage.image.naturalHeight,
         })
-        .then(resp => {
+        .then((resp) => {
           console.debug(resp.data)
           const image = new Image()
 
@@ -121,7 +121,7 @@ export default {
           image.src = resp.data["img"]
           this.resultCanvas.baseImage.image = baseImage.image
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error)
           console.error(error.response.data)
         })
