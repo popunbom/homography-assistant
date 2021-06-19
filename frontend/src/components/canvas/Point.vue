@@ -1,5 +1,5 @@
 <template>
-  <v-group :config="groupConfig" @mouseup="handleMouseUp">
+  <v-group :config="groupConfig" @dragend="handleMouseUp">
     <v-circle :config="circleConfig"> </v-circle>
     <v-text :config="textConfig"></v-text>
   </v-group>
