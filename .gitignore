@@ -263,3 +263,4 @@ yarn-error.log
 test.*
 !public/
 !test.png
+!backend/lib

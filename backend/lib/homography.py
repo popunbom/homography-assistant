@@ -2,7 +2,11 @@ import cv2
 import numpy as np
 
 
-def projective_transform(img, points_img, points_another, width, height):
+def projective_transform(img: np.ndarray,
+                         points_img: list[list[float]],
+                         points_another: list[list[float]],
+                         width: int,
+                         height: int):
     """
     2画像間で射影変換を行う
 
@@ -11,11 +15,11 @@ def projective_transform(img, points_img, points_another, width, height):
     img : numpy.ndarray
         入力画像
 
-    points_img: list of lists
-        画像 `img` における対応点
+    points_img: list[list[float]]
+        画像 `img` における対応点 (2次元配列)
 
-    points_another : list of lists
-        もう一方の画像における対応点
+    points_another : list[list[float]]
+        もう一方の画像における対応点  (2次元配列)
 
     width, height : int
         生成される画像の大きさ
