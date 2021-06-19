@@ -47,6 +47,9 @@ pipenv run python3 app.py
 - popunbom <fantom0779@gmail.com>
 - rain <@rain9525>
 
+## Contributor
+- spdbear <@spdbear>
+
 ## LICENSE
 
 MIT
