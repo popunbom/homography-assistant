@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from typing import List
 
 import uvicorn
 from fastapi import FastAPI, Request
@@ -17,8 +18,8 @@ logger = logging.getLogger("uvicorn.error")
 
 class TransformRequest(BaseModel):
     img: str
-    points_img: list[list[float]]
-    points_another: list[list[float]]
+    points_img: List[List[float]]
+    points_another: List[List[float]]
     width: int
     height: int
 

@@ -1,10 +1,11 @@
+from typing import List
 import cv2
 import numpy as np
 
 
 def projective_transform(img: np.ndarray,
-                         points_img: list[list[float]],
-                         points_another: list[list[float]],
+                         points_img: List[List[float]],
+                         points_another: List[List[float]],
                          width: int,
                          height: int):
     """
@@ -15,10 +16,10 @@ def projective_transform(img: np.ndarray,
     img : numpy.ndarray
         入力画像
 
-    points_img: list[list[float]]
+    points_img: List[List[float]]
         画像 `img` における対応点 (2次元配列)
 
-    points_another : list[list[float]]
+    points_another : List[List[float]]
         もう一方の画像における対応点  (2次元配列)
 
     width, height : int
