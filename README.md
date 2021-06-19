@@ -9,6 +9,7 @@
   npm install -g yarn
   ```
 - Python ( `>3.8` )
+  - Pipenv： `$ pip3 install pipenv`
 
 ## Set-Up
 
