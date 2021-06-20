@@ -1,8 +1,11 @@
 <div id="app">
 	<AppBar />
 	<main>
-		<!-- <Test /> -->
-		<img id="img" src="./test.png" alt="test.png" bind:this={image}>
+		<DraggableList
+			bind:points={points}
+			on:changed={handleListChange}
+		/>
+		<!-- <img id="img" src="./test.png" alt="test.png" bind:this={image}>
 		{#if image !== undefined}
 		<ImageCanvas
 			width={1280}
@@ -12,7 +15,7 @@
 			on:add-point={() => {}}
 			on:drag-point={() => {}}
 		/>
-		{/if}
+		{/if} -->
 	</main>
 </div>
 
@@ -20,11 +23,24 @@
 	import { onMount } from "svelte";
 	import AppBar from "./components/AppBar.svelte"	
 	import type { PointConfig } from "./components/canvas/Point";
-	import ImageCanvas from "./components/ImageCanvas.svelte";
+	
+	import DraggableList from "./components/DraggableList.svelte";
+	import { pickColorWithBG } from "./utils/colors";
 	// import Test from "./components/Test.svelte"	
 
 	let image: HTMLImageElement;
-	let points: PointConfig[] = [];
+	let points: PointConfig[] = [...Array(5).keys()].map(
+		(index: number) => ({
+			id: index,
+			color: pickColorWithBG(index),
+			pos: {x: index * 100, y: index * 50}
+		} as PointConfig)
+	)
+
+	const handleListChange = () => {
+		console.debug("Detect changed");
+		console.debug(points);
+	}
 
 	onMount(() => {
 		image = document.getElementById("img") as HTMLImageElement
