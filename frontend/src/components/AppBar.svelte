@@ -1,5 +1,5 @@
 <div id="app-bar">
-  <h1 class="title-bar">homograph-assistant</h1>
+  <h2 class="title-bar">homograph-assistant</h2>
   <div class="tool-bar">
     <button>Transform</button>
     <button>Hide</button>
@@ -16,16 +16,17 @@
   display: flex;
   justify-content: space-between;
 }
-h1.title-bar {
+h2.title-bar {
 	margin: 0;
 	padding: 0.5em;
 }
 .tool-bar {
   display: flex;
   align-items: center;
+  padding: 0 1em;
 }
 button {
-  $font_size: 1.35em;
+  $font_size: 1.05em;
   height: 80%;
   box-sizing: border-box;
   text-transform: uppercase;
@@ -34,7 +35,7 @@ button {
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
   font-size: $font_size;
-  width: calc(#{$font_size} * 7);
+  width: calc(#{$font_size} * 10);
   &:hover {
     background-color: $primary_400;
   }
