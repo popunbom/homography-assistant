@@ -1,12 +1,20 @@
 <div class="draggable-list" bind:this={sortableList}>
-  {#each $pointConfigs as point (point.id)}
+  {#each $points as point, i (point.id)}
     <div class="draggable-item">
-      <div class="hamburger"></div>
+      <svg class="icon-hamburger" viewBox="0 0 80 80">
+        <rect width="80" height="20" y="15"></rect>
+        <rect width="80" height="20" y="45"></rect>
+      </svg>
       <div
         class="circle"
-        style={`background-color: ${point.color.bg}; color: ${point.color.fg}`}
+        style={`background-color: ${pickColor(point.id).bg}; color: ${pickColor(point.id).fg}`}
       >{point.id}</div>
       <div>({point.pos.x}, {point.pos.y})</div>
+      <svg class="icon-cross" viewBox="0 0 80 80" on:click={handleRemove(i)}>
+        <circle cx="40" cy="40" r="40"></circle>
+        <rect width="40" height="12" transform="rotate(45) translate(36, -6) "></rect>
+        <rect width="40" height="12" transform="rotate(-45) translate(-20, 50) "></rect>
+      </svg>
     </div>
   {/each}
 </div>
@@ -15,22 +23,38 @@
 import { onMount, createEventDispatcher } from 'svelte';
 import Sortable from "sortablejs";
 
-import { points, pointConfigs } from "../stores/points";
+import { points } from "../stores/points";
+import { pickColor } from "../utils/colors";
 
 const dispatch = createEventDispatcher<{changed: void}>();
 
-let sortableList: HTMLDivElement
+const handleSwap = (indexFrom: number, indexTo: number) => {
+  // Change order of items
+  points.update(
+    points => {
+      points.splice(indexTo, 0, ...points.splice(indexFrom, 1));
+      return points;
+    }
+  );
+  dispatch("changed");
+}
+const handleRemove = (index: number) => (() => {
+  points.update(
+    points => {
+      points.splice(index, 1)
+      return points
+    }
+  );
+  dispatch("changed");
+});
 
+let sortableList: HTMLDivElement;
 onMount(() => {
   Sortable.create(sortableList, {
     animation: 150,
-    handle: ".hamburger",
+    handle: ".icon-hamburger",
     ghostClass: 'blue-background-class',
-    onEnd: (evt) => {
-      // Change order of items
-      $points.splice(evt.newIndex, 0, ...$points.splice(evt.oldIndex, 1))
-      dispatch("changed")
-    }
+    onEnd: (event) => handleSwap(event.oldIndex, event.newIndex),
   });
 })
 
@@ -39,17 +63,20 @@ onMount(() => {
 <style lang="scss">
 .draggable-list {
   margin: 8px;
-  padding: 16px;
+  // padding: 16px;
   width: 300px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  // border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.4);
 }
 .draggable-item {
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  position: relative;
   padding: 8px;
   margin: -2px 0px;
   display: flex;
   align-items: center;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 }
 .circle {
   width: 1.5em;
@@ -61,29 +88,31 @@ onMount(() => {
   justify-content: center;
   align-items: center;
 }
-.hamburger {
-  width: 17px;
-  height: 4px;
-  color: rgba(0,0,0, 10%);
-  background: currentColor;
-  position: relative;
+.icon-hamburger {
+  width: 15px;
+  fill:rgba(0, 0, 0, 0.15);
   margin-right: 8px;
   cursor: grab;
-  &:before {
-    content: "";
-    position: absolute;
-    top: -6px;
-    width:  100%;
-    height: 100%;
-    background: currentColor;
+  &:active {
+    cursor: grabbing;
   }
-  &:after {
-    content: "";
-    position: absolute;
-    top: 6px;
-    width:  100%;
-    height: 100%;
-    background: currentColor;
+}
+.icon-cross {
+  // border: 1px solid red;
+  position: absolute;
+  right: 10px;
+  width: 20px;
+  fill: #fafafa;
+  margin-right: 8px;
+  cursor: pointer;
+  & > circle {
+    fill: rgba(0, 0, 0, 0.2);
+    &:hover {
+      fill: hsl(0, 100%, 40%);
+    }
+    &:active {
+      fill: hsl(0, 100%, 30%);
+    }
   }
 }
 </style>

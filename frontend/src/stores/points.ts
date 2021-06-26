@@ -1,17 +1,4 @@
-import { writable, derived } from "svelte/store";
-import { pickColorWithBG } from "../utils/colors";
-import type { PointConfig } from "../components/canvas/Point";
-import type Konva from "konva";
+import { writable } from "svelte/store";
+import type { Point } from "../entities/Point";
 
-export const points = writable([] as Konva.Vector2d[]);
-
-export const pointConfigs = derived(
-  points,
-  $points => $points.map(
-    (value, index) => ({
-      id: index,
-      color: pickColorWithBG(index),
-      pos: value
-    } as PointConfig)
-  )
-)
+export const points = writable([] as Point[]);

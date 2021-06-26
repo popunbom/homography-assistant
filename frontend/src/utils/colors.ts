@@ -5,7 +5,7 @@ export interface Color {
   fg: string
 }
 
-export function pickColorWithBG(index: number): Color {
+export function pickColor(index: number): Color {
   const colors = chroma.brewer.Set3
 
   return {
