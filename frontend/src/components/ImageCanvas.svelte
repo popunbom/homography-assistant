@@ -55,6 +55,7 @@
   let pointScale: number = 1.0;
 
   const childs: LayerChildType[] = [
+    // Image Layer
     (() => {
       const kImage = new Konva.Image({ image });
       kImage.on("mouseenter", () => (isCursorOnImage = true));
@@ -68,6 +69,7 @@
       });
       return kImage;
     }).bind(this)(),
+    // Points Layer
     ...points.map((point, i) => {
       return new Point({
         ...point,
