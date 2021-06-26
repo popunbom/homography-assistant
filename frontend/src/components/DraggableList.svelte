@@ -1,5 +1,5 @@
 <div class="draggable-list" bind:this={sortableList}>
-  {#each points as point (point.id)}
+  {#each $pointConfigs as point (point.id)}
     <div class="draggable-item">
       <div class="hamburger"></div>
       <div
@@ -12,12 +12,12 @@
 </div>
 
 <script lang="ts">
-import { onMount, createEventDispatcher } from 'svelte'
-import Sortable from "sortablejs"
-import type { PointConfig } from './canvas/Point';
+import { onMount, createEventDispatcher } from 'svelte';
+import Sortable from "sortablejs";
+
+import { points, pointConfigs } from "../stores/points";
 
 const dispatch = createEventDispatcher<{changed: void}>();
-export let points: PointConfig[]
 
 let sortableList: HTMLDivElement
 
@@ -28,7 +28,7 @@ onMount(() => {
     ghostClass: 'blue-background-class',
     onEnd: (evt) => {
       // Change order of items
-      points.splice(evt.newIndex, 0, ...points.splice(evt.oldIndex, 1))
+      $points.splice(evt.newIndex, 0, ...$points.splice(evt.oldIndex, 1))
       dispatch("changed")
     }
   });
