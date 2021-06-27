@@ -9,36 +9,37 @@
 
 <style lang="scss">
   @import "../stylesheets/variables";
+  @import "../stylesheets/global";
+
   #app-bar {
+    height: 100%;
+    padding: 0 1em;
     background-color: $primary;
     color: $primary_text;
     box-shadow: 0px 2px 2px $primary;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   h2.title-bar {
     margin: 0;
-    padding: 0.5em;
+    padding: 0;
     color: white;
   }
   .tool-bar {
     display: flex;
     align-items: center;
     padding: 0 1em;
+    height: 100%;
   }
   button {
+    @extend .btn__style_reset;
     $font_size: 1.05em;
-    background: none;
-    border: none;
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    height: 80%;
+    height: 100%;
+    color: $primary_text;
     box-sizing: border-box;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: $primary_text;
     font-family: "Roboto", sans-serif;
     font-weight: 100;
     font-size: $font_size;

@@ -1,25 +1,45 @@
 <script lang="ts">
   import AppBar from "./components/AppBar.svelte";
   import PointsSelector from "./components/PointsSelector.svelte";
-  import { pointsA } from "./stores";
+  import { pointsA, pointsB } from "./stores";
 </script>
 
 <div id="app">
-  <AppBar />
+  <header>
+    <AppBar />
+  </header>
   <main>
-    <div class="wrapper">
-      <PointsSelector bind:points={$pointsA} />
+    <div class="point-selectors">
+      <div>
+        <PointsSelector bind:points={$pointsA} />
+      </div>
+      <div>
+        <PointsSelector bind:points={$pointsB} />
+      </div>
     </div>
   </main>
 </div>
 
 <style lang="scss">
+  #app {
+    height: 100%;
+  }
+  header {
+    height: 7%;
+  }
   main {
-    padding: 16px;
+    height: 93%;
     position: relative;
   }
-  .wrapper {
-    width: 800px;
-    height: 300px;
+  .point-selectors {
+    height: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    & > * {
+      height: 49%;
+    }
   }
 </style>
