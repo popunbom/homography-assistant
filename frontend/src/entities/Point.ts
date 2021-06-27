@@ -41,6 +41,7 @@ export class Point extends Konva.Group {
 
     // Text
     this.kText = new Konva.Text({
+      ...baseConfig.text,
       text,
       fill: color.fg,
       align: "center",
