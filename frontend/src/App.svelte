@@ -11,10 +11,10 @@
   <main>
     <div class="point-selectors">
       <div>
-        <PointsSelector bind:points={$pointsA} />
+        <PointsSelector name="画像1" bind:points={$pointsA} />
       </div>
       <div>
-        <PointsSelector bind:points={$pointsB} />
+        <PointsSelector name="画像2" bind:points={$pointsB} />
       </div>
     </div>
   </main>
