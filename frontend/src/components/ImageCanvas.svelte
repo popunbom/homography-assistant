@@ -1,9 +1,10 @@
 <script lang="ts">
   import type Konva from "konva";
 
-  import { Image } from "../entities/Image";
-  import { Point } from "../entities/Point";
   import { calcStageConfig } from "../utils/configs";
+  import { newPoint } from "../entities/Point";
+  import { newImage } from "../entities/Image";
+  import type { Point } from "../entities/Point";
   import type { ScalableStageConfig } from "../utils/configs";
   import type { LayerChildType } from "./canvas/ScalableStage.svelte";
 
@@ -29,7 +30,7 @@
 
   // Event handlers
   const handleAddPoint = (pos: Konva.Vector2d) => {
-    const point = new Point(
+    const point = newPoint(
       points.length + 1,
       stageScale,
       pos,
@@ -40,7 +41,7 @@
 
   // Computed values
   $: childs = [
-    new Image(image, (cursorPos) => handleAddPoint(cursorPos)),
+    newImage(image, (cursorPos) => handleAddPoint(cursorPos)),
     ...points,
   ] as LayerChildType[];
 </script>

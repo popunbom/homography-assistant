@@ -3,15 +3,21 @@
   import Sortable from "sortablejs";
 
   import type { Point } from "../entities/Point";
+  import { getPos } from "../entities/Point";
 
   const dispatch = createEventDispatcher<{ changed: void }>();
 
   export let points: Point[];
-  const handleSwap = (indexFrom: number, indexTo: number) => {
+  const handleSwap = (
+    indexFrom: number | undefined,
+    indexTo: number | undefined,
+  ) => {
     // Change order of items
-    points.splice(indexTo, 0, ...points.splice(indexFrom, 1));
-    points = Array(...points);
-    dispatch("changed");
+    if (indexFrom !== undefined && indexTo !== undefined) {
+      points.splice(indexTo, 0, ...points.splice(indexFrom, 1));
+      points = Array(...points);
+      dispatch("changed");
+    }
   };
   const handleRemove = (index: number) => () => {
     points.splice(index, 1);
@@ -43,7 +49,9 @@
       >
         {point.pointNumber}
       </div>
-      <div>({Math.round(point.pos.x)}, {Math.round(point.pos.y)})</div>
+      <div class="coordinate">
+        ({Math.round(getPos(point).x)}, {Math.round(getPos(point).y)})
+      </div>
       <svg class="icon-cross" viewBox="0 0 80 80" on:click={handleRemove(i)}>
         <circle cx="40" cy="40" r="40" />
         <rect
@@ -62,6 +70,9 @@
 </div>
 
 <style lang="scss">
+  * {
+    font-family: monospace;
+  }
   .draggable-list {
     margin: 8px;
     // padding: 16px;

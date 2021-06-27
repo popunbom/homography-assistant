@@ -1,11 +1,13 @@
 <script lang="ts" context="module">
-  export type LayerChildType = Konva.Group | Konva.Shape;
+  export type LayerChildType = Konva.Image | Point;
 </script>
 
 <script lang="ts">
   import { onMount, createEventDispatcher, afterUpdate } from "svelte";
 
   import Konva from "konva";
+
+  import type { Point } from "src/entities/Point";
   import type { ScalableStageConfig } from "../../utils/configs";
 
   // Fixed values
@@ -28,6 +30,10 @@
       position: stage.position(),
     };
 
+    if (current.cursor === null) {
+      return;
+    }
+
     const pointerPosTo = {
       x: current.cursor.x / current.scale - current.position.x / current.scale,
       y: current.cursor.y / current.scale - current.position.y / current.scale,
@@ -40,7 +46,7 @@
 
     stage.scale({ x: newScale, y: newScale });
 
-    const newPointerPos = stage.getPointerPosition();
+    const newPointerPos = stage.getPointerPosition() || current.position;
     const newPos = {
       x: -(pointerPosTo.x - newPointerPos.x / newScale) * newScale,
       y: -(pointerPosTo.y - newPointerPos.y / newScale) * newScale,
@@ -50,11 +56,14 @@
   };
 
   const handleWindowResize: svelte.JSX.UIEventHandler<Window> = () => {
-    dispatch("scalling", stage.scale());
+    if (selfDom.parentElement === null) {
+      return;
+    }
     stage.setSize({
       width: selfDom.parentElement.clientWidth,
       height: selfDom.parentElement.clientHeight,
     });
+    dispatch("scalling", stage.scale());
   };
 
   const handleWheel: svelte.JSX.WheelEventHandler<HTMLDivElement> = (event) => {
@@ -63,8 +72,11 @@
   };
 
   const updateKonva = () => {
+    console.debug("updateKonva");
     layer.removeChildren();
-    childs.forEach((child) => layer.add(child));
+    childs.forEach((child) =>
+      layer.add(child instanceof Konva.Image ? child : child.kGroup),
+    );
     stage.add(layer);
   };
 

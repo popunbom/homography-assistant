@@ -10,37 +10,44 @@ const baseConfig = {
   text: {
     fontSize: 15,
   } as Konva.TextConfig,
+};
+
+export interface Point {
+  kGroup: Konva.Group;
+  pointNumber: number;
+  color: Color;
 }
 
-export class Point extends Konva.Group {
-  private kCircle: Konva.Circle;
-  private kText: Konva.Text;
-  public pointNumber: number;
+export function getPos(point: Point): Konva.Vector2d {
+  return point.kGroup.getPosition();
+}
 
-  constructor(pointNumber: number, stageScale: Konva.Vector2d, pos: Konva.Vector2d, onChangeHandler: () => void) {
-    super({
-      draggable: true,
-      scale: { x: 1 / stageScale.x, y: 1 / stageScale.y },
-      ...pos,
-    });
+export function newPoint(
+  pointNumber: number,
+  stageScale: Konva.Vector2d,
+  pos: Konva.Vector2d,
+  onChangeHandler: () => void,
+): Point {
+  const kGroup = new Konva.Group({
+    draggable: true,
+    scale: { x: 1 / stageScale.x, y: 1 / stageScale.y },
+    ...pos,
+  });
 
-    this.pointNumber = pointNumber;
+  const text = `${pointNumber}`;
+  const color = pickColor(pointNumber);
+  const circleRadius = baseConfig.circle.radius || 12;
 
-    const text = `${this.pointNumber}`;
-    const color = pickColor(this.pointNumber);
-    const circleRadius = baseConfig.circle.radius;
-
+  kGroup.add(
     // Circle
-    this.kCircle = new Konva.Circle({
+    new Konva.Circle({
       ...baseConfig.circle,
       radius: circleRadius,
       fill: color.bg,
       stroke: color.fg,
-    });
-    this.add(this.kCircle);
-
+    }),
     // Text
-    this.kText = new Konva.Text({
+    new Konva.Text({
       ...baseConfig.text,
       text,
       fill: color.fg,
@@ -49,25 +56,10 @@ export class Point extends Konva.Group {
       height: circleRadius,
       x: -(circleRadius / 2),
       y: -(circleRadius / 2),
-    });
-    this.add(this.kText);
+    }),
+  );
 
-    this.on("dragend", ({ currentTarget }) => {
-      const newPos = currentTarget.position();
-      this.setPosition(newPos);
-      onChangeHandler();
-    });
-  }
-  public toString(): string {
-    return `Point <pointNumber=${this.pointNumber}, pos=${JSON.stringify(this.pos)}, scale=${JSON.stringify(this.scale())}, color=${JSON.stringify(this.color)}>`;
-  }
-  get pos(): Konva.Vector2d {
-    return this.getPosition()
-  }
-  get color(): Color {
-    return {
-      fg: this.kCircle.stroke(),
-      bg: this.kCircle.fill(),
-    }
-  }
+  kGroup.on("dragend", onChangeHandler);
+
+  return { kGroup, pointNumber, color };
 }

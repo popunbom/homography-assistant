@@ -5,10 +5,17 @@
 
   let dragging: boolean = false;
 
-  const handleFileUpload = (file: File) => {
+  const handleFileUpload = (file: File | null | undefined) => {
+    if (file === null || file === undefined) {
+      return;
+    }
+
     const fileReader = new FileReader();
 
     fileReader.onload = (event) => {
+      if (event.target === null) {
+        return;
+      }
       const image = new Image();
       image.onload = () => dispatcher("imageLoad", image);
       if (typeof event.target.result === "string") {

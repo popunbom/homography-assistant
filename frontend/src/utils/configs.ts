@@ -18,6 +18,27 @@ export function calcStageConfig(
   height: number | undefined,
   image: HTMLImageElement
 ): ScalableStageConfig {
+  if (width !== undefined) {
+    // Fit to image width
+    return {
+      width: width,
+      height: image.naturalHeight * (width / image.naturalWidth),
+      scale: {
+        x: width / image.naturalWidth,
+        y: width / image.naturalWidth,
+      },
+    }
+  } else if (height !== undefined) {
+    // Fit to image height
+    return {
+      width: image.naturalWidth * (height / image.naturalHeight),
+      height: height,
+      scale: {
+        x: height / image.naturalHeight,
+        y: height / image.naturalHeight,
+      },
+    }
+  }
   if (width !== undefined && height !== undefined) {
     // Fit to canvas size
     return {
@@ -28,27 +49,6 @@ export function calcStageConfig(
         y: (width >= height) ? width / image.naturalWidth : height / image.naturalHeight,
       },
     }
-  } else {
-    if (width !== undefined) {
-      // Fit to image width
-      return {
-        width: width,
-        height: image.naturalHeight * (width / image.naturalWidth),
-        scale: {
-          x: width / image.naturalWidth,
-          y: width / image.naturalWidth,
-        },
-      }
-    } else {
-      // Fit to image height
-      return {
-        width: image.naturalWidth * (height / image.naturalHeight),
-        height: height,
-        scale: {
-          x: height / image.naturalHeight,
-          y: height / image.naturalHeight,
-        },
-      }
-    }
   }
+  return { width: 0, height: 0, scale: { x: 1.0, y: 1.0 } };
 }
