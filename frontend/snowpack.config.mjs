@@ -12,6 +12,9 @@ export default {
       "@snowpack/plugin-svelte",
       {
         preprocess: sveltePreprocess({
+          defaults: {
+            script: 'typescript',
+          },
           postcss: {
             plugins: [autoprefixer()]
           }
@@ -41,6 +44,7 @@ export default {
   },
   devOptions: {
     /* ... */
+    port: 5000,
   },
   buildOptions: {
     /* ... */
