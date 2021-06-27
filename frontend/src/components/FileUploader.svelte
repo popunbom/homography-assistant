@@ -79,7 +79,7 @@
     transition-property: all;
     transition: 0.1s;
     &::after {
-      content: "画像を開く";
+      content: "クリックまたはファイルドラッグで画像を開く";
     }
     &:hover {
       background-color: rgba(64, 128, 255, 0.3);

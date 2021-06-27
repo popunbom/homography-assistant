@@ -19,6 +19,7 @@
   h2.title-bar {
     margin: 0;
     padding: 0.5em;
+    color: white;
   }
   .tool-bar {
     display: flex;

@@ -74,7 +74,6 @@
     font-family: monospace;
   }
   .draggable-list {
-    border: 2px solid crimson;
     width: 100%;
     height: 100%;
     overflow: scroll;

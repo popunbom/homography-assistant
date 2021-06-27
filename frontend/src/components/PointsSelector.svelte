@@ -47,6 +47,7 @@
   }
   .draggable-list {
     width: 30%;
-    border: 2px solid dodgerblue;
+    border: 2px solid gray;
+    margin: -2px -2px;
   }
 </style>

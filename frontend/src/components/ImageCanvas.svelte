@@ -34,6 +34,7 @@
       points.length + 1,
       stageScale,
       pos,
+      // Svelte では、代入が更新検知になっているため
       () => (points = [...points]),
     );
     points = [...points, point];
