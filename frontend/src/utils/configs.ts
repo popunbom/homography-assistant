@@ -18,7 +18,6 @@ export function calcStageConfig(
   height: number | undefined,
   image: HTMLImageElement
 ): ScalableStageConfig {
-  console.debug(arguments)
   if (width !== undefined && height !== undefined) {
     // Fit to canvas size
     return {
