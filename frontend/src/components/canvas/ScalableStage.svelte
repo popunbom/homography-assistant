@@ -58,7 +58,6 @@
   };
 
   const handleWheel: svelte.JSX.WheelEventHandler<HTMLDivElement> = (event) => {
-    event.preventDefault();
     cursorCenteredScaling(event.deltaY, scrollScale);
     dispatch("scalling", stage.scale());
   };
@@ -82,7 +81,7 @@
 
 <div
   class="konva-stage"
-  on:wheel={handleWheel}
+  on:wheel|preventDefault={handleWheel}
   style="width: {config.width}px; height: {config.height}px;"
   bind:this={selfDom}
 />
