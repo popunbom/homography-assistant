@@ -1,10 +1,10 @@
 import type Konva from "konva";
 
 export interface ScalableStageConfig {
-  width: number
-  height: number
-  scale: Konva.Vector2d
-};
+  width: number;
+  height: number;
+  scale: Konva.Vector2d;
+}
 
 /**
  * 画像の大きさを考慮して ScalableStageConfig を計算する
@@ -16,9 +16,23 @@ export interface ScalableStageConfig {
 export function calcStageConfig(
   width: number | undefined,
   height: number | undefined,
-  image: HTMLImageElement
+  image: HTMLImageElement,
 ): ScalableStageConfig {
-  if (width !== undefined) {
+  console.debug("calcStageConfig");
+  console.debug(arguments);
+  if (width !== undefined && height !== undefined) {
+    // Fit to canvas
+    let scale = width / image.naturalWidth;
+    if (image.naturalHeight * scale > height) {
+      scale = height / image.naturalHeight;
+    }
+
+    return {
+      width,
+      height,
+      scale: { x: scale, y: scale },
+    };
+  } else if (width !== undefined) {
     // Fit to image width
     return {
       width: width,
@@ -27,7 +41,7 @@ export function calcStageConfig(
         x: width / image.naturalWidth,
         y: width / image.naturalWidth,
       },
-    }
+    };
   } else if (height !== undefined) {
     // Fit to image height
     return {
@@ -37,18 +51,7 @@ export function calcStageConfig(
         x: height / image.naturalHeight,
         y: height / image.naturalHeight,
       },
-    }
-  }
-  if (width !== undefined && height !== undefined) {
-    // Fit to canvas size
-    return {
-      width,
-      height,
-      scale: {
-        x: (width >= height) ? width / image.naturalWidth : height / image.naturalHeight,
-        y: (width >= height) ? width / image.naturalWidth : height / image.naturalHeight,
-      },
-    }
+    };
   }
   return { width: 0, height: 0, scale: { x: 1.0, y: 1.0 } };
 }
