@@ -3,24 +3,24 @@
   import FileUploader from "./components/FileUploader.svelte";
   import ImageCanvas from "./components/ImageCanvas.svelte";
   import DraggableList from "./components/DraggableList.svelte";
-  import type { Point } from "./entities/Point";
+
+  import { pointsA } from "./stores";
 
   let image: HTMLImageElement;
-  let points: Point[] = [];
 </script>
 
 <div id="app">
   <AppBar />
   <main>
     <div class="draggable-list">
-      <DraggableList bind:points />
+      <DraggableList bind:points={$pointsA} />
     </div>
     <div class="wrapper">
       <FileUploader on:imageLoad={({ detail }) => (image = detail)} />
     </div>
     {#if image !== undefined}
       <div class="image-canvas">
-        <ImageCanvas width={600} height={300} bind:points {image} />
+        <ImageCanvas width={600} height={300} bind:points={$pointsA} {image} />
       </div>
     {/if}
   </main>
