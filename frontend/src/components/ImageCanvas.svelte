@@ -40,9 +40,7 @@
 
   // Computed values
   $: childs = [
-    // Image Layer
     new Image(image, (cursorPos) => handleAddPoint(cursorPos)),
-    // Points Layer
     ...points,
   ] as LayerChildType[];
 </script>

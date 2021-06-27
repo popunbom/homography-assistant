@@ -13,10 +13,7 @@
   <AppBar />
   <main>
     <div class="draggable-list">
-      <DraggableList
-        bind:points
-        on:changed={() => console.log(points.map((e) => e.toString()))}
-      />
+      <DraggableList bind:points />
     </div>
     <div class="wrapper">
       <FileUploader on:imageLoad={({ detail }) => (image = detail)} />

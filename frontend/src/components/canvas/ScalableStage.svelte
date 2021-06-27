@@ -58,7 +58,6 @@
   };
 
   const handleWheel: svelte.JSX.WheelEventHandler<HTMLDivElement> = (event) => {
-    console.debug(`handleWheel <scale=${JSON.stringify(stage.scale())}>`);
     event.preventDefault();
     cursorCenteredScaling(event.deltaY, scrollScale);
     dispatch("scalling", stage.scale());
