@@ -7,9 +7,6 @@ const baseConfig = {
     radius: 12,
     strokeWidth: 3,
   } as Konva.CircleConfig,
-  text: {
-    fontSize: 15,
-  } as Konva.TextConfig,
 };
 
 export interface Point {
@@ -37,6 +34,7 @@ export function newPoint(
   const text = `${pointNumber}`;
   const color = pickColor(pointNumber);
   const circleRadius = baseConfig.circle.radius || 12;
+  const textBoxSize = circleRadius * 1.5;
 
   kGroup.add(
     // Circle
@@ -48,14 +46,15 @@ export function newPoint(
     }),
     // Text
     new Konva.Text({
-      ...baseConfig.text,
       text,
+      fontSize: circleRadius,
       fill: color.fg,
       align: "center",
-      width: circleRadius,
-      height: circleRadius,
-      x: -(circleRadius / 2),
-      y: -(circleRadius / 2),
+      verticalAlign: "center",
+      width: textBoxSize,
+      height: textBoxSize,
+      x: -(textBoxSize / 2),
+      y: -(textBoxSize / 2 - circleRadius / 4),
     }),
   );
 
