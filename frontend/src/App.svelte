@@ -7,7 +7,9 @@
 <div id="app">
   <AppBar />
   <main>
-    <PointsSelector bind:points={$pointsA} />
+    <div class="wrapper">
+      <PointsSelector bind:points={$pointsA} />
+    </div>
   </main>
 </div>
 
@@ -15,5 +17,9 @@
   main {
     padding: 16px;
     position: relative;
+  }
+  .wrapper {
+    width: 800px;
+    height: 300px;
   }
 </style>

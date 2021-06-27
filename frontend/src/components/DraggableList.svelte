@@ -74,16 +74,14 @@
     font-family: monospace;
   }
   .draggable-list {
-    margin: 8px;
-    // padding: 16px;
-    width: 300px;
-    // border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.4);
+    border: 2px solid crimson;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
   }
   .draggable-item {
     position: relative;
     padding: 8px;
-    margin: -2px 0px;
     display: flex;
     align-items: center;
     &:hover {

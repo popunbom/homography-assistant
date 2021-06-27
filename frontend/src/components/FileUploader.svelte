@@ -26,7 +26,7 @@
   };
 </script>
 
-<div class="file-uploader">
+<div class="file-uploader fill">
   <label
     for="imgFile"
     x-dragging={dragging}
@@ -52,8 +52,23 @@
     height: 100%;
   }
   .file-uploader {
-    @extend .fill;
-    border: 2px solid red;
+    position: relative;
+    box-sizing: border-box;
+    &::after {
+      $border-width: 5px;
+      $padding-size: 16px;
+      $round-size: 15px;
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: -1;
+      top: $padding-size;
+      left: $padding-size;
+      width: calc(100% - calc(calc(#{$border-width} + #{$padding-size}) * 2));
+      height: calc(100% - calc(calc(#{$border-width} + #{$padding-size}) * 2));
+      border: $border-width dashed rgba(0, 0, 0, 20%);
+      border-radius: $round-size;
+    }
   }
   label {
     @extend .fill;

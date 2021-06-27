@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import FileUploader from "./FileUploader.svelte";
   import ImageCanvas from "./ImageCanvas.svelte";
   import DraggableList from "./DraggableList.svelte";
@@ -9,36 +10,43 @@
 
   // Reactive data
   let image: HTMLImageElement;
+  let imageCanvasDom: HTMLDivElement;
+  let width: number;
+  let height: number;
+
+  onMount(() => {
+    width = imageCanvasDom.clientWidth;
+    height = imageCanvasDom.clientHeight;
+  });
 </script>
 
 <div class="points-selector">
+  <div class="image-canvas" bind:this={imageCanvasDom}>
+    {#if image === undefined}
+      <FileUploader on:imageLoad={({ detail }) => (image = detail)} />
+    {:else}
+      <ImageCanvas {width} {height} bind:points {image} />
+    {/if}
+  </div>
   <div class="draggable-list">
     <DraggableList bind:points />
   </div>
-  <div class="file-uploader">
-    <FileUploader on:imageLoad={({ detail }) => (image = detail)} />
-  </div>
-  {#if image !== undefined}
-    <div class="image-canvas">
-      <ImageCanvas width={600} height={300} bind:points {image} />
-    </div>
-  {/if}
 </div>
 
 <style lang="scss">
-  .file-uploader {
-    width: 200px;
-    height: 50px;
-    margin: 16px;
+  .points-selector {
+    border: 2px solid gray;
+    width: 100%;
+    height: 100%;
+    display: flex;
   }
 
   .image-canvas {
-    border: 1px solid cornflowerblue;
-    width: fit-content;
-    height: fit-content;
+    width: 70%;
+    height: 100%;
   }
   .draggable-list {
-    position: absolute;
-    right: 0px;
+    width: 30%;
+    border: 2px solid dodgerblue;
   }
 </style>
