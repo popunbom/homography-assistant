@@ -43,8 +43,11 @@ export class Point extends Konva.Group {
     this.kText = new Konva.Text({
       text,
       fill: color.fg,
-      x: -(circleRadius * text.length * 0.4),
-      y: -(circleRadius * 0.5),
+      align: "center",
+      width: circleRadius,
+      height: circleRadius,
+      x: -(circleRadius / 2),
+      y: -(circleRadius / 2),
     });
     this.add(this.kText);
 
