@@ -27,6 +27,12 @@
   }
   button {
     $font_size: 1.05em;
+    background: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     height: 80%;
     box-sizing: border-box;
     text-transform: uppercase;

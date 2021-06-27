@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { onMount, createEventDispatcher } from "svelte";
+  import { onMount, createEventDispatcher, afterUpdate } from "svelte";
 
   import Konva from "konva";
   import type { ScalableStageConfig } from "../../utils/configs";
@@ -58,10 +58,16 @@
   };
 
   const handleWheel: svelte.JSX.WheelEventHandler<HTMLDivElement> = (event) => {
-    console.debug("handleWheel");
+    console.debug(`handleWheel <scale=${JSON.stringify(stage.scale())}>`);
     event.preventDefault();
     cursorCenteredScaling(event.deltaY, scrollScale);
     dispatch("scalling", stage.scale());
+  };
+
+  const updateKonva = () => {
+    layer.removeChildren();
+    childs.forEach((child) => layer.add(child));
+    stage.add(layer);
   };
 
   onMount(async () => {
@@ -70,10 +76,9 @@
       ...config,
     });
     layer = new Konva.Layer({ draggable: true });
-
-    childs.forEach((child) => layer.add(child));
-    stage.add(layer);
+    updateKonva();
   });
+  afterUpdate(updateKonva);
 </script>
 
 <div

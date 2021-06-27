@@ -2,24 +2,20 @@
   import { onMount, createEventDispatcher } from "svelte";
   import Sortable from "sortablejs";
 
-  import { points } from "../stores/points";
-  import { pickColor } from "../utils/colors";
+  import type { Point } from "../entities/Point";
 
   const dispatch = createEventDispatcher<{ changed: void }>();
 
+  export let points: Point[];
   const handleSwap = (indexFrom: number, indexTo: number) => {
     // Change order of items
-    points.update((points) => {
-      points.splice(indexTo, 0, ...points.splice(indexFrom, 1));
-      return points;
-    });
+    points.splice(indexTo, 0, ...points.splice(indexFrom, 1));
+    points = Array(...points);
     dispatch("changed");
   };
   const handleRemove = (index: number) => () => {
-    points.update((points) => {
-      points.splice(index, 1);
-      return points;
-    });
+    points.splice(index, 1);
+    points = Array(...points);
     dispatch("changed");
   };
 
@@ -35,7 +31,7 @@
 </script>
 
 <div class="draggable-list" bind:this={sortableList}>
-  {#each $points as point, i (point.id)}
+  {#each points as point, i (point.pointNumber)}
     <div class="draggable-item">
       <svg class="icon-hamburger" viewBox="0 0 80 80">
         <rect width="80" height="20" y="15" />
@@ -43,13 +39,11 @@
       </svg>
       <div
         class="circle"
-        style={`background-color: ${pickColor(point.id).bg}; color: ${
-          pickColor(point.id).fg
-        }`}
+        style={`background-color: ${point.color.bg}; color: ${point.color.fg}`}
       >
-        {point.id}
+        {point.pointNumber}
       </div>
-      <div>({point.pos.x}, {point.pos.y})</div>
+      <div>({Math.round(point.pos.x)}, {Math.round(point.pos.y)})</div>
       <svg class="icon-cross" viewBox="0 0 80 80" on:click={handleRemove(i)}>
         <circle cx="40" cy="40" r="40" />
         <rect
@@ -114,10 +108,14 @@
     cursor: pointer;
     & > circle {
       fill: rgba(0, 0, 0, 0.2);
-      &:hover {
+    }
+    &:hover {
+      & > circle {
         fill: hsl(0, 100%, 40%);
       }
-      &:active {
+    }
+    &:active {
+      & > circle {
         fill: hsl(0, 100%, 30%);
       }
     }
