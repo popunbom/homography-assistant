@@ -42,7 +42,10 @@
 
   // Computed values
   $: childs = [
-    newImage(image, (cursorPos) => handleAddPoint(cursorPos)),
+    newImage({
+      image,
+      onClickHandler: (cursorPos) => handleAddPoint(cursorPos),
+    }),
     ...points,
   ] as LayerChildType[];
 </script>

@@ -1,6 +1,11 @@
 import Konva from "konva";
 
-type OnClickHandler = (cursorPos: Konva.Vector2d) => void;
+export interface ImageConfig {
+  image: HTMLImageElement;
+  visible?: boolean;
+  opacity?: number;
+  onClickHandler?: (cursorPos: Konva.Vector2d) => void;
+}
 
 export function getCursorPos(node: Konva.Node): Konva.Vector2d {
   const stage = node.getStage();
@@ -35,14 +40,21 @@ export function getCursorPos(node: Konva.Node): Konva.Vector2d {
   };
 }
 
-export function newImage(
-  image: HTMLImageElement,
-  onClickHandler: OnClickHandler,
-): Konva.Image {
-  const kImage = new Konva.Image({ image });
-  kImage.on("click", ({ currentTarget }) =>
-    onClickHandler(getCursorPos(currentTarget)),
-  );
+export function newImage(conf: ImageConfig): Konva.Image {
+  const kImage = new Konva.Image({ image: conf.image });
+
+  if (conf.visible !== undefined) {
+    kImage.visible(conf.visible);
+  }
+  if (conf.opacity !== undefined) {
+    kImage.opacity(conf.opacity);
+  }
+  if (conf.onClickHandler !== undefined) {
+    const onClickHandler = conf.onClickHandler;
+    kImage.on("click", ({ currentTarget }) =>
+      onClickHandler(getCursorPos(currentTarget)),
+    );
+  }
 
   return kImage;
 }
