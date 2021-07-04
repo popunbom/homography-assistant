@@ -1,9 +1,19 @@
+<script lang="ts">
+  import { createEventDispatcher } from "svelte";
+
+  const dispatcher = createEventDispatcher<{
+    transform: void;
+    hide: void;
+    export: void;
+  }>();
+</script>
+
 <div id="app-bar">
   <h2 class="title-bar">homograph-assistant</h2>
   <div class="tool-bar">
-    <button>Transform</button>
-    <button>Hide</button>
-    <button>Export</button>
+    <button on:click={() => dispatcher("transform")}>Transform</button>
+    <button on:click={() => dispatcher("hide")}>Hide</button>
+    <button on:click={() => dispatcher("export")}>Export</button>
   </div>
 </div>
 
