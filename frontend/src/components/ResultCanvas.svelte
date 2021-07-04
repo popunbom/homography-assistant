@@ -16,38 +16,25 @@
   // Reactive data
   let stage: Konva.Stage;
   let layer: Konva.Layer;
-  let childs: LayerChildType[] = [];
+  let children: LayerChildType[] = [];
   let opacity: number = 0.5;
   let visibleOverImage: boolean = true;
   let stageParentDom: HTMLDivElement | undefined;
 
-  $: kBaseImage = newImage({
-    image: baseImage,
-    opacity: 1,
-  });
-
+  // Computed values
+  $: disabled = baseImage === undefined || overImage === undefined;
+  $: kBaseImage = newImage({ image: baseImage, opacity: 1 });
   $: kOverImage = newImage({
     image: overImage,
     opacity: opacity,
     visible: visibleOverImage,
   });
-
-  // Computed values
-  $: childs = (() => {
-    console.log("kBaseImage, kOverImage");
-    console.debug(kBaseImage);
-    console.debug(kOverImage);
-    return [kBaseImage, kOverImage];
-  })();
-  $: disabled = baseImage === undefined || overImage === undefined;
-  $: scalableStageConfig = (() => {
-    console.log("re-calc stage config");
-    return calcStageConfig(
-      stageParentDom?.clientWidth,
-      stageParentDom?.clientHeight,
-      baseImage,
-    );
-  })();
+  $: children = [kBaseImage, kOverImage];
+  $: scalableStageConfig = calcStageConfig(
+    stageParentDom?.clientWidth,
+    stageParentDom?.clientHeight,
+    baseImage,
+  );
 
   const handleOpacityChange = (newValue: number) => {
     kOverImage.opacity(newValue);
@@ -81,7 +68,7 @@
     <ScalableStage
       bind:stage
       bind:layer
-      {childs}
+      childs={children}
       config={scalableStageConfig}
     />
   </div>

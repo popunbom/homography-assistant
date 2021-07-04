@@ -5,7 +5,6 @@
   import { newPoint } from "../entities/Point";
   import { newImage } from "../entities/Image";
   import type { PointSelector } from "../entities/PointSelector";
-  import type { ScalableStageConfig } from "../utils/configs";
   import type { LayerChildType } from "./canvas/ScalableStage.svelte";
 
   import ScalableStage from "./canvas/ScalableStage.svelte";
@@ -18,12 +17,20 @@
   let layer: Konva.Layer;
   let stageParentDom: HTMLDivElement | undefined;
 
+  // Computed values
   $: scalableStageConfig = calcStageConfig(
     stageParentDom?.clientWidth,
     stageParentDom?.clientHeight,
     data.image,
   );
   $: stageScale = scalableStageConfig.scale;
+  $: children = [
+    newImage({
+      image: data.image,
+      onClickHandler: (cursorPos) => handleAddPoint(cursorPos),
+    }),
+    ...data.points,
+  ] as LayerChildType[];
 
   // Event handlers
   const handleAddPoint = (pos: Konva.Vector2d) => {
@@ -36,19 +43,15 @@
     );
     data.points = [...data.points, point];
   };
-
-  // Computed values
-  $: childs = [
-    newImage({
-      image: data.image,
-      onClickHandler: (cursorPos) => handleAddPoint(cursorPos),
-    }),
-    ...data.points,
-  ] as LayerChildType[];
 </script>
 
 <div class="fill-width fill-height" bind:this={stageParentDom}>
-  <ScalableStage bind:stage bind:layer {childs} config={scalableStageConfig} />
+  <ScalableStage
+    bind:stage
+    bind:layer
+    childs={children}
+    config={scalableStageConfig}
+  />
 </div>
 
 <style lang="scss">
