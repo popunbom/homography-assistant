@@ -4,7 +4,7 @@
   import { calcStageConfig } from "../utils/configs";
   import { newPoint } from "../entities/Point";
   import { newImage } from "../entities/Image";
-  import type { Point } from "../entities/Point";
+  import type { PointSelector } from "../entities/PointSelector";
   import type { ScalableStageConfig } from "../utils/configs";
   import type { LayerChildType } from "./canvas/ScalableStage.svelte";
 
@@ -13,14 +13,13 @@
   // Props
   export let width: number;
   export let height: number;
-  export let image: HTMLImageElement;
-  export let points: Point[];
+  export let data: PointSelector;
 
   // Fixed data
   const scalableStageConfig: ScalableStageConfig = calcStageConfig(
     width,
     height,
-    image,
+    data.image,
   );
 
   // Reactive data
@@ -31,22 +30,22 @@
   // Event handlers
   const handleAddPoint = (pos: Konva.Vector2d) => {
     const point = newPoint(
-      points.length + 1,
+      data.points.length + 1,
       stageScale,
       pos,
       // Svelte では、代入が更新検知になっているため
-      () => (points = [...points]),
+      () => (data.points = [...data.points]),
     );
-    points = [...points, point];
+    data.points = [...data.points, point];
   };
 
   // Computed values
   $: childs = [
     newImage({
-      image,
+      image: data.image,
       onClickHandler: (cursorPos) => handleAddPoint(cursorPos),
     }),
-    ...points,
+    ...data.points,
   ] as LayerChildType[];
 </script>
 

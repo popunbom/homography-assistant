@@ -3,14 +3,13 @@
   import FileUploader from "./FileUploader.svelte";
   import ImageCanvas from "./ImageCanvas.svelte";
   import DraggableList from "./DraggableList.svelte";
-  import type { Point } from "../entities/Point";
+  import type { PointSelector } from "src/entities/PointSelector";
 
   // Props
   export let name: string;
-  export let points: Point[];
+  export let data: PointSelector;
 
   // Reactive data
-  let image: HTMLImageElement;
   let imageCanvasDom: HTMLDivElement;
   let width: number;
   let height: number;
@@ -25,14 +24,14 @@
   <h2>{name}</h2>
   <div class="flex-wrapper">
     <div class="image-canvas" bind:this={imageCanvasDom}>
-      {#if image === undefined}
-        <FileUploader on:imageLoad={({ detail }) => (image = detail)} />
+      {#if data.image === undefined}
+        <FileUploader on:imageLoad={({ detail }) => (data.image = detail)} />
       {:else}
-        <ImageCanvas {width} {height} bind:points {image} />
+        <ImageCanvas {width} {height} bind:data />
       {/if}
     </div>
     <div class="draggable-list">
-      <DraggableList bind:points />
+      <DraggableList bind:points={data.points} />
     </div>
   </div>
 </div>

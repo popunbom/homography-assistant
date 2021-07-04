@@ -1,7 +1,7 @@
 <script lang="ts">
   import AppBar from "./components/AppBar.svelte";
   import PointsSelector from "./components/PointsSelector.svelte";
-  import { pointsA, pointsB } from "./stores";
+  import { basePointSelector, overPointSelector } from "./stores";
 </script>
 
 <div id="app">
@@ -11,10 +11,10 @@
   <main>
     <div class="point-selectors">
       <div>
-        <PointsSelector name="画像1" bind:points={$pointsA} />
+        <PointsSelector name="基準画像" bind:data={$basePointSelector} />
       </div>
       <div>
-        <PointsSelector name="画像2" bind:points={$pointsB} />
+        <PointsSelector name="変形画像" bind:data={$overPointSelector} />
       </div>
     </div>
   </main>
