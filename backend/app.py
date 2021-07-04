@@ -9,6 +9,7 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel
 
 import lib.img_util as util
+from lib.entity import ImageSize, Vector2d
 from lib.homography import projective_transform
 
 
@@ -17,24 +18,22 @@ logger = logging.getLogger("uvicorn.error")
 
 
 class TransformRequest(BaseModel):
-    img: str
-    points_img: List[List[float]]
-    points_another: List[List[float]]
-    width: int
-    height: int
+    over_image: str
+    base_image_size: ImageSize
+    base_points: List[Vector2d]
+    over_points: List[Vector2d]
 
 
-@app.post("/api")
+@app.post("/api/transform")
 async def api_endpoint(transform: TransformRequest, request: Request):
-    # logger.debug(transform)
+    # logger.debug(await request.body())
 
     transformed_img = util.ndarray_to_data_url(
         projective_transform(
-            util.data_url_to_ndarray(transform.img),
-            transform.points_img,
-            transform.points_another,
-            transform.width,
-            transform.height
+            util.data_url_to_ndarray(transform.over_image),
+            transform.over_points,
+            transform.base_points,
+            transform.base_image_size
         )
     )
 

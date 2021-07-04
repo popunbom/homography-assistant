@@ -5,6 +5,9 @@ from base64 import b64decode, b64encode
 
 import cv2
 import numpy as np
+import logging
+
+logger = logging.getLogger("uvicorn.error")
 
 
 class InvalidDataURL(Exception):
@@ -32,6 +35,7 @@ def data_url_to_ndarray(data_url: str) -> np.ndarray:
         画像データが格納された Numpy 配列
     """
 
+    logger.debug("data_url: {}".format(data_url[:20]))
     _, b64_data = data_url.split(",")
 
     img = cv2.imdecode(
