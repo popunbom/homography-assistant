@@ -3,6 +3,7 @@
 
   const dispatcher = createEventDispatcher<{ imageLoad: HTMLImageElement }>();
 
+  export let id: string = "imgFile";
   let dragging: boolean = false;
 
   const handleFileUpload = (file: File | null | undefined) => {
@@ -28,7 +29,7 @@
 
 <div class="file-uploader fill">
   <label
-    for="imgFile"
+    for={id}
     x-dragging={dragging}
     on:dragenter|preventDefault={() => (dragging = true)}
     on:dragleave|preventDefault={() => (dragging = false)}
@@ -39,7 +40,7 @@
     <input
       type="file"
       name="imgFile"
-      id="imgFile"
+      {id}
       on:change|preventDefault={({ currentTarget }) =>
         handleFileUpload(currentTarget.files?.item(0))}
     />
