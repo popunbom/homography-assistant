@@ -1,4 +1,5 @@
 import type { PointSelector } from "src/entities/PointSelector";
+import { getPos } from "../entities/Point";
 
 /**
  * BE API に射影変換リクエストを送信する
@@ -11,8 +12,8 @@ export function sendTransformRequest(
   over: PointSelector,
 ): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
-    const base_points = base.points.map((point) => point.kGroup.position());
-    const over_points = over.points.map((point) => point.kGroup.position());
+    const base_points = base.points.map((point) => getPos(point));
+    const over_points = over.points.map((point) => getPos(point));
 
     if (base_points.length < 4 || over_points.length < 4) {
       reject("最低4点以上の対応点が必要です");
