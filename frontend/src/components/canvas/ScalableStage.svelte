@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-  import { onMount, createEventDispatcher, afterUpdate } from "svelte";
+  import { onMount, createEventDispatcher, afterUpdate, tick } from "svelte";
 
   import Konva from "konva";
 
@@ -73,11 +73,15 @@
 
   const updateKonva = () => {
     console.debug("updateKonva");
+    stage.size({ width: config.width, height: config.height });
+    stage.scale(config.scale);
     layer.removeChildren();
     childs.forEach((child) =>
       layer.add(child instanceof Konva.Image ? child : child.kGroup),
     );
+    layer.draw();
     stage.add(layer);
+    stage.draw();
   };
 
   onMount(async () => {
@@ -89,12 +93,13 @@
     updateKonva();
   });
   afterUpdate(updateKonva);
+  tick().then(updateKonva);
 </script>
 
 <div
   class="konva-stage"
   on:wheel|preventDefault={handleWheel}
-  style="width: {config.width}px; height: {config.height}px;"
+  style={`width: ${config.width}px; height: ${config.height}px;`}
   bind:this={selfDom}
 />
 
