@@ -88,7 +88,7 @@
 </div>
 
 <style lang="scss">
-  @import "../stylesheets/global";
+  @import "../stylesheets/common";
 
   .result-canvas {
     height: 100%;

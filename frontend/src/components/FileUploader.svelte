@@ -27,7 +27,7 @@
   };
 </script>
 
-<div class="file-uploader fill">
+<div class="file-uploader">
   <label
     for={id}
     x-dragging={dragging}
@@ -48,17 +48,17 @@
 </div>
 
 <style lang="scss">
-  .fill {
-    width: 100%;
-    height: 100%;
-  }
+  @import "../stylesheets/common";
+
   .file-uploader {
+    @extend .fill-width;
+    @extend .fill-height;
     position: relative;
     box-sizing: border-box;
     &::after {
-      $border-width: 5px;
-      $padding-size: 16px;
-      $round-size: 15px;
+      $border-width: 3px;
+      $padding-size: 15px;
+      $round-size: 5px;
       content: "";
       display: block;
       position: absolute;
@@ -72,13 +72,13 @@
     }
   }
   label {
-    @extend .fill;
-    display: flex;
+    @extend .fill-width;
+    @extend .fill-height;
+    @extend .flex__center_vertical;
     justify-content: center;
-    align-items: center;
+
     user-select: none;
-    transition-property: all;
-    transition: 0.1s;
+    transition: all 150ms;
     &::after {
       content: "クリックまたはファイルドラッグで画像を開く";
     }

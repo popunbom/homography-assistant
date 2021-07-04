@@ -20,7 +20,7 @@
   });
 </script>
 
-<div class="points-selector">
+<div class="points-selector fill-height">
   <h2>{name}</h2>
   <div class="flex-wrapper">
     <div class="image-canvas" bind:this={imageCanvasDom}>
@@ -37,29 +37,28 @@
 </div>
 
 <style lang="scss">
-  .points-selector,
-  .image-canvas {
-    height: 100%;
-  }
+  @import "../stylesheets/common";
+
   h2 {
+    @extend .flex__center_vertical;
     height: 10%;
     margin: 0;
-    display: flex;
-    align-items: center;
   }
   .flex-wrapper {
-    border: 2px solid gray;
-    width: 100%;
+    @extend .fill-width;
     height: 90%;
+    border: 2px solid gray;
     display: flex;
   }
 
   .image-canvas {
+    @extend .fill-height;
     width: 70%;
   }
   .draggable-list {
     width: 30%;
     border: 2px solid gray;
     margin: -2px -2px;
+    box-sizing: content-box;
   }
 </style>

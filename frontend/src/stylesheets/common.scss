@@ -1,0 +1,26 @@
+.fill-height {
+	height: 100%;
+}
+
+.fill-width {
+	width: 100%;
+}
+
+.flex__center_horizontal {
+	display: flex;
+	justify-content: space-between;
+}
+
+.flex__center_vertical {
+	display: flex;
+	align-items: center;
+}
+
+.btn__style_reset {
+	background: none;
+	border: none;
+	outline: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}

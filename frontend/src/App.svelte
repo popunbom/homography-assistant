@@ -52,6 +52,7 @@
 </div>
 
 <style lang="scss">
+  @import "./stylesheets/common";
   #app {
     height: 100%;
   }
@@ -59,21 +60,16 @@
     height: 7%;
   }
   main {
+    @extend .flex__center_horizontal;
     height: 93%;
     position: relative;
-    display: flex;
-    justify-content: space-between;
     padding: 16px;
-    // border: 2px solid cornflowerblue;
-    box-sizing: border-box;
   }
   .point-selectors {
+    @extend .flex__center_horizontal;
+    flex-direction: column;
     width: 59%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-sizing: border-box;
     & > * {
       height: 49%;
     }
@@ -81,8 +77,6 @@
   .result-canvas {
     width: 40%;
     height: 100%;
-    // padding: 16px;
-    // border: 2px solid gray;
-    box-sizing: border-box;
+    box-sizing: content-box;
   }
 </style>

@@ -70,35 +70,39 @@
 </div>
 
 <style lang="scss">
+  @import "../stylesheets/common";
+
+  $circle_radius: 2em;
+  $icon_size: calc(#{$circle_radius} * 0.7);
+
   * {
     font-family: monospace;
   }
   .draggable-list {
-    width: 100%;
-    height: 100%;
+    @extend .fill-width;
+    @extend .fill-height;
     overflow: scroll;
   }
   .draggable-item {
+    @extend .flex__center_vertical;
     position: relative;
     padding: 8px;
-    display: flex;
-    align-items: center;
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
     }
   }
   .circle {
-    width: 1.5em;
-    height: 1.5em;
+    @extend .flex__center_vertical;
+    justify-content: center;
+    width: $circle_radius;
+    height: $circle_radius;
+    font-size: calc(#{$circle_radius} * 0.5);
     border: 2px solid black;
     border-radius: 50%;
-    margin-right: 0.5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-right: 8px;
   }
   .icon-hamburger {
-    width: 15px;
+    width: $icon_size;
     fill: rgba(0, 0, 0, 0.15);
     margin-right: 8px;
     cursor: grab;
@@ -107,10 +111,9 @@
     }
   }
   .icon-cross {
-    // border: 1px solid red;
     position: absolute;
-    right: 10px;
-    width: 20px;
+    right: 8px;
+    width: $icon_size;
     fill: #fafafa;
     margin-right: 8px;
     cursor: pointer;
