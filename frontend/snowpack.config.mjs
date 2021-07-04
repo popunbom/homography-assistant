@@ -1,6 +1,7 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 import sveltePreprocess from "svelte-preprocess";
 import autoprefixer from "autoprefixer";
+import proxy from "http2-proxy";
 
 export default {
   mount: {
@@ -34,6 +35,15 @@ export default {
   routes: [
     /* Enable an SPA Fallback in development: */
     // {"match": "routes", "src": ".*", "dest": "/index.html"},
+    {
+      src: "/api/.*",
+      dest: (req, res) => {
+        return proxy.web(req, res, {
+          hostname: "localhost",
+          port: "5000"
+        })
+      },
+    }
   ],
   optimize: {
     /* Example: Bundle your final build: */
@@ -44,7 +54,7 @@ export default {
   },
   devOptions: {
     /* ... */
-    port: 5000,
+    port: 8080,
   },
   buildOptions: {
     /* ... */
