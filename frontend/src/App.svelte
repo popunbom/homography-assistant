@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
   import AppBar from "./components/AppBar.svelte";
   import PointsSelector from "./components/PointsSelector.svelte";
   import { basePointSelector, overPointSelector } from "./stores";
@@ -8,8 +6,6 @@
   import { sendTransformRequest } from "./utils/api";
 
   let resultCanvasDom: HTMLDivElement;
-  let resultCanvasWidth: number;
-  let resultCanvasHeight: number;
   let transformedImage: HTMLImageElement;
 
   const handleTransform = () => {
@@ -21,10 +17,6 @@
       },
     );
   };
-  onMount(() => {
-    resultCanvasWidth = resultCanvasDom.clientWidth;
-    resultCanvasHeight = resultCanvasDom.clientHeight;
-  });
 </script>
 
 <div id="app">
@@ -42,8 +34,6 @@
     </div>
     <div class="result-canvas" bind:this={resultCanvasDom}>
       <ResultCanvas
-        width={resultCanvasWidth}
-        height={resultCanvasHeight}
         baseImage={transformedImage}
         overImage={$basePointSelector.image}
       />

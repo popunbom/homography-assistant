@@ -1,22 +1,17 @@
 <script lang="ts">
-  import { tick } from "svelte";
   import type Konva from "konva";
 
   import { calcStageConfig } from "../utils/configs";
   import { newImage } from "../entities/Image";
-  import type { ScalableStageConfig } from "../utils/configs";
   import type { LayerChildType } from "./canvas/ScalableStage.svelte";
 
   import ScalableStage from "./canvas/ScalableStage.svelte";
 
   // Props
-  export let width: number;
-  export let height: number;
   export let baseImage: HTMLImageElement;
   export let overImage: HTMLImageElement;
 
   // Fixed data
-  // let scalableStageConfig = calcStageConfig(width, height, baseImage);
 
   // Reactive data
   let stage: Konva.Stage;
@@ -24,6 +19,7 @@
   let childs: LayerChildType[] = [];
   let opacity: number = 0.5;
   let visibleOverImage: boolean = true;
+  let stageParentDom: HTMLDivElement | undefined;
 
   $: kBaseImage = newImage({
     image: baseImage,
@@ -46,7 +42,11 @@
   $: disabled = baseImage === undefined || overImage === undefined;
   $: scalableStageConfig = (() => {
     console.log("re-calc stage config");
-    return calcStageConfig(width, height, baseImage);
+    return calcStageConfig(
+      stageParentDom?.clientWidth,
+      stageParentDom?.clientHeight,
+      baseImage,
+    );
   })();
 
   const handleOpacityChange = (newValue: number) => {
@@ -77,7 +77,7 @@
       >{visibleOverImage ? "hidden" : "visible"}</button
     >
   </div>
-  <div class="scalable-stage">
+  <div class="scalable-stage" bind:this={stageParentDom}>
     <ScalableStage
       bind:stage
       bind:layer
