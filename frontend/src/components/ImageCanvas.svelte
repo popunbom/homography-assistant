@@ -11,21 +11,19 @@
   import ScalableStage from "./canvas/ScalableStage.svelte";
 
   // Props
-  export let width: number;
-  export let height: number;
   export let data: PointSelector;
-
-  // Fixed data
-  const scalableStageConfig: ScalableStageConfig = calcStageConfig(
-    width,
-    height,
-    data.image,
-  );
 
   // Reactive data
   let stage: Konva.Stage;
   let layer: Konva.Layer;
-  let stageScale: Konva.Vector2d = scalableStageConfig.scale;
+  let stageParentDom: HTMLDivElement | undefined;
+
+  $: scalableStageConfig = calcStageConfig(
+    stageParentDom?.clientWidth,
+    stageParentDom?.clientHeight,
+    data.image,
+  );
+  $: stageScale = scalableStageConfig.scale;
 
   // Event handlers
   const handleAddPoint = (pos: Konva.Vector2d) => {
@@ -49,6 +47,10 @@
   ] as LayerChildType[];
 </script>
 
-<div class="image-canvas">
+<div class="fill-width fill-height" bind:this={stageParentDom}>
   <ScalableStage bind:stage bind:layer {childs} config={scalableStageConfig} />
 </div>
+
+<style lang="scss">
+  @import "../stylesheets/common";
+</style>

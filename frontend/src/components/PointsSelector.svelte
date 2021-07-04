@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import FileUploader from "./FileUploader.svelte";
   import ImageCanvas from "./ImageCanvas.svelte";
   import DraggableList from "./DraggableList.svelte";
@@ -11,13 +10,6 @@
 
   // Reactive data
   let imageCanvasDom: HTMLDivElement;
-  let width: number;
-  let height: number;
-
-  onMount(() => {
-    width = imageCanvasDom.clientWidth;
-    height = imageCanvasDom.clientHeight;
-  });
 </script>
 
 <div class="points-selector fill-height">
@@ -27,7 +19,7 @@
       {#if data.image === undefined}
         <FileUploader on:imageLoad={({ detail }) => (data.image = detail)} />
       {:else}
-        <ImageCanvas {width} {height} bind:data />
+        <ImageCanvas bind:data />
       {/if}
     </div>
     <div class="draggable-list">
@@ -58,7 +50,7 @@
   .draggable-list {
     width: 30%;
     border: 2px solid gray;
-    margin: -2px -2px;
+    margin: -2px -2px -2px 0px;
     box-sizing: content-box;
   }
 </style>
