@@ -4,24 +4,32 @@
   import { basePointSelector, overPointSelector } from "./stores";
   import ResultCanvas from "./components/ResultCanvas.svelte";
   import { sendTransformRequest } from "./utils/api";
+  import Alert from "./components/Alert.svelte";
 
   let resultCanvasDom: HTMLDivElement;
   let transformedImage: HTMLImageElement;
+  let visible = false;
+  let message = "";
 
   const handleTransform = () => {
-    console.debug("handleTransform");
-    sendTransformRequest($basePointSelector, $overPointSelector).then(
-      (image) => {
+    sendTransformRequest($basePointSelector, $overPointSelector)
+      .then((image) => {
         transformedImage = image;
         console.debug(transformedImage);
-      },
-    );
+      })
+      .catch((reason: string) => (message = reason));
   };
 </script>
 
 <div id="app">
+  {#if message !== ""}
+    <Alert {message} on:close={() => (message = "")} />
+  {/if}
   <header>
-    <AppBar on:transform={() => handleTransform()} />
+    <AppBar
+      on:transform={() => handleTransform()}
+      on:export={() => (message = "未実装です")}
+    />
   </header>
   <main>
     <div class="point-selectors">
