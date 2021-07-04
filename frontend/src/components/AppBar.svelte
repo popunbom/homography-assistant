@@ -3,7 +3,6 @@
 
   const dispatcher = createEventDispatcher<{
     transform: void;
-    hide: void;
     export: void;
   }>();
 </script>
@@ -12,7 +11,6 @@
   <h2 class="title-bar">homograph-assistant</h2>
   <div class="tool-bar">
     <button on:click={() => dispatcher("transform")}>Transform</button>
-    <button on:click={() => dispatcher("hide")}>Hide</button>
     <button on:click={() => dispatcher("export")}>Export</button>
   </div>
 </div>
