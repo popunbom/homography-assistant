@@ -5,10 +5,11 @@
   import ResultCanvas from "./components/ResultCanvas.svelte";
   import { sendTransformRequest } from "./utils/api";
   import Alert from "./components/Alert.svelte";
+  import PointsExportModal from "./components/PointsExportModal.svelte";
 
   let resultCanvasDom: HTMLDivElement;
   let transformedImage: HTMLImageElement;
-  let visible = false;
+  let showModal = false;
   let message = "";
 
   const handleTransform = () => {
@@ -25,10 +26,13 @@
   {#if message !== ""}
     <Alert {message} on:close={() => (message = "")} />
   {/if}
+  {#if showModal}
+    <PointsExportModal on:close={() => (showModal = false)} />
+  {/if}
   <header>
     <AppBar
       on:transform={() => handleTransform()}
-      on:export={() => (message = "未実装です")}
+      on:export={() => (showModal = true)}
     />
   </header>
   <main>
