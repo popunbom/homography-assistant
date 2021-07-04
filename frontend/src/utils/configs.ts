@@ -16,22 +16,18 @@ export interface ScalableStageConfig {
 export function calcStageConfig(
   width: number | undefined,
   height: number | undefined,
-  image: HTMLImageElement,
+  image: HTMLImageElement | undefined,
 ): ScalableStageConfig {
-  console.debug("calcStageConfig");
-  console.debug(arguments);
-  if (width !== undefined && height !== undefined) {
+  if (image === undefined) {
+    return { width: 0, height: 0, scale: { x: 1.0, y: 1.0 } };
+  } else if (width !== undefined && height !== undefined) {
     // Fit to canvas
     let scale = width / image.naturalWidth;
     if (image.naturalHeight * scale > height) {
       scale = height / image.naturalHeight;
     }
 
-    return {
-      width,
-      height,
-      scale: { x: scale, y: scale },
-    };
+    return { width, height, scale: { x: scale, y: scale } };
   } else if (width !== undefined) {
     // Fit to image width
     return {
