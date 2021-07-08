@@ -52,7 +52,7 @@ def projective_transform(img: np.ndarray,
         M,
         (dst_img_size.width, dst_img_size.height),
         borderMode=cv2.BORDER_CONSTANT,
-        borderValue=(0, 0, 0, 0)
+        borderValue=(0, 0, 0, 0)  # (B, G, R, A)
     )
 
     return transformed_img
