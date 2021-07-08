@@ -16,6 +16,7 @@
 
   // References
   let selfDom: HTMLDivElement;
+  let scrolled = false;
 
   // Props
   export let stage: Konva.Stage;
@@ -53,6 +54,7 @@
     };
 
     stage.position(newPos);
+    scrolled = true;
   };
 
   const handleWindowResize: svelte.JSX.UIEventHandler<Window> = () => {
@@ -83,7 +85,12 @@
   const updateConfig = (_config: ScalableStageConfig) => {
     console.debug("updateConfig");
     stage.size({ width: _config.width, height: _config.height });
-    stage.scale(_config.scale);
+    if (!scrolled) {
+      // scale の更新は「ウィンドウサイズの変更」または「画像がセット」された時のみ実行
+      // 一度でもスクロールされた後は scale を更新しない
+      // scale を更新すると、点を設置した際に画像位置がズレる
+      stage.scale(_config.scale);
+    }
   };
 
   $: if (layer !== undefined) updateLayer(childs);
