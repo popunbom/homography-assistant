@@ -65,12 +65,14 @@
     >
   </div>
   <div class="scalable-stage" bind:this={stageParentDom}>
-    <ScalableStage
-      bind:stage
-      bind:layer
-      childs={children}
-      config={scalableStageConfig}
-    />
+    {#if !disabled}
+      <ScalableStage
+        bind:stage
+        bind:layer
+        childs={children}
+        config={scalableStageConfig}
+      />
+    {/if}
   </div>
 </div>
 
