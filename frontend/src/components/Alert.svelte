@@ -26,9 +26,7 @@
   .alert {
     position: absolute;
     top: 3%;
-    // left: 0;
     right: 3%;
-    // margin: auto;
     padding: 16px;
     width: 300px;
     height: 100px;

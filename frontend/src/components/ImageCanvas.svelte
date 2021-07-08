@@ -4,6 +4,7 @@
   import { calcStageConfig } from "../utils/configs";
   import { newPoint } from "../entities/Point";
   import { newImage } from "../entities/Image";
+  import type { ScalableStageConfig } from "../utils/configs";
   import type { PointSelector } from "../entities/PointSelector";
   import type { LayerChildType } from "./canvas/ScalableStage.svelte";
 
@@ -16,21 +17,34 @@
   let stage: Konva.Stage;
   let layer: Konva.Layer;
   let stageParentDom: HTMLDivElement | undefined;
-
-  // Computed values
-  $: scalableStageConfig = calcStageConfig(
+  let scalableStageConfig: ScalableStageConfig = calcStageConfig(
     stageParentDom?.clientWidth,
     stageParentDom?.clientHeight,
     data.image,
   );
+  let children: LayerChildType[] = [];
+
+  // Computed values
+  $: {
+    console.log("Update@ImageCanvas: scalableStageConfig");
+    scalableStageConfig = calcStageConfig(
+      stageParentDom?.clientWidth,
+      stageParentDom?.clientHeight,
+      // TODO: data.points の更新で、ここが発火 → position が初期化されることでズレる
+      data.image,
+    );
+  }
   $: stageScale = scalableStageConfig.scale;
-  $: children = [
-    newImage({
-      image: data.image,
-      onClickHandler: (cursorPos) => handleAddPoint(cursorPos),
-    }),
-    ...data.points,
-  ] as LayerChildType[];
+  $: {
+    console.log("Update@ImageCanvas: children");
+    children = [
+      newImage({
+        image: data.image,
+        onClickHandler: (cursorPos) => handleAddPoint(cursorPos),
+      }),
+      ...data.points,
+    ];
+  }
 
   // Event handlers
   const handleAddPoint = (pos: Konva.Vector2d) => {

@@ -71,29 +71,35 @@
     dispatch("scalling", stage.scale());
   };
 
-  const updateKonva = () => {
-    console.debug("updateKonva");
-    stage.size({ width: config.width, height: config.height });
-    stage.scale(config.scale);
+  const updateLayer = (_children: LayerChildType[]) => {
+    console.debug("updateLayer");
     layer.removeChildren();
-    childs.forEach((child) =>
+    _children.forEach((child) =>
       layer.add(child instanceof Konva.Image ? child : child.kGroup),
     );
     layer.draw();
-    stage.add(layer);
-    stage.draw();
   };
 
+  const updateConfig = (_config: ScalableStageConfig) => {
+    console.debug("updateConfig");
+    stage.size({ width: _config.width, height: _config.height });
+    stage.scale(_config.scale);
+  };
+
+  $: if (layer !== undefined) updateLayer(childs);
+  $: if (config !== undefined && stage !== undefined) updateConfig(config);
+
   onMount(async () => {
+    console.debug("onMount");
+    layer = new Konva.Layer({ draggable: true });
+    updateLayer(childs);
     stage = new Konva.Stage({
       container: selfDom,
       ...config,
     });
-    layer = new Konva.Layer({ draggable: true });
-    updateKonva();
+    stage.add(layer);
+    updateConfig(config);
   });
-  afterUpdate(updateKonva);
-  tick().then(updateKonva);
 </script>
 
 <div

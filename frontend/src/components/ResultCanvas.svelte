@@ -26,10 +26,10 @@
   $: kBaseImage = newImage({ image: baseImage, opacity: 1 });
   $: kOverImage = newImage({
     image: overImage,
-    opacity: opacity,
+    opacity: 1,
     visible: visibleOverImage,
   });
-  $: children = [kBaseImage, kOverImage];
+  $: children = [kOverImage, kBaseImage];
   $: scalableStageConfig = calcStageConfig(
     stageParentDom?.clientWidth,
     stageParentDom?.clientHeight,
@@ -37,7 +37,7 @@
   );
 
   const handleOpacityChange = (newValue: number) => {
-    kOverImage.opacity(newValue);
+    kBaseImage.opacity(newValue);
   };
   const handleToggleVisible = (newVisibleOverImage: boolean) => {
     kOverImage.visible(newVisibleOverImage);
