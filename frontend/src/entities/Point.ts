@@ -4,8 +4,8 @@ import { Color, pickColor } from "../utils/colors";
 const baseConfig = {
   circle: {
     scale: { x: 1, y: 1 },
-    radius: 12,
-    strokeWidth: 3,
+    radius: 5,
+    strokeWidth: 1,
   } as Konva.CircleConfig,
 };
 
