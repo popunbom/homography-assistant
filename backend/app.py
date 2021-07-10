@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import logging
 from typing import List
 
@@ -41,4 +42,6 @@ async def api_endpoint(transform: TransformRequest, request: Request):
 
 
 if __name__ == '__main__':
-    uvicorn.run("__main__:app", host="127.0.0.1", port=5000, log_level="debug")
+    host = os.getenv("API_HOST", "127.0.0.1")
+    port = int(os.getenv("API_PORT", "5000"), base=10)
+    uvicorn.run("__main__:app", host=host, port=port, log_level="debug")
