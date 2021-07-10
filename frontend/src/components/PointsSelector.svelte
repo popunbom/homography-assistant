@@ -5,7 +5,8 @@
   import type { PointSelector } from "src/entities/PointSelector";
 
   // Props
-  export let name: string;
+  export let fileDomId: string;
+  export let label: string;
   export let data: PointSelector;
 
   // Reactive data
@@ -13,11 +14,14 @@
 </script>
 
 <div class="points-selector fill-height">
-  <h2>{name}</h2>
+  <h2>{label}</h2>
   <div class="flex-wrapper">
     <div class="image-canvas" bind:this={imageCanvasDom}>
       {#if data.image === undefined}
-        <FileUploader on:imageLoad={({ detail }) => (data.image = detail)} />
+        <FileUploader
+          {fileDomId}
+          on:imageLoad={({ detail }) => (data.image = detail)}
+        />
       {:else}
         <ImageCanvas bind:data />
       {/if}
