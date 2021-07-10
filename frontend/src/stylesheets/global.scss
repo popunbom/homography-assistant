@@ -1,0 +1,43 @@
+@import "./variables.scss";
+@import "./common.scss";
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+}
+body {
+	margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+button {
+	@extend .btn__style_reset;
+	padding: 0.5em;
+	border-radius: 0.1em;
+	box-sizing: border-box;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-family: "Roboto", sans-serif;
+	font-weight: 300;
+	background-color: $primary_text;
+	color: $primary;
+	transition: all 150ms;
+	&:hover {
+		color: $primary_text;
+		background-color: $primary;
+	}
+	&:active {
+		color: $primary_text;
+		background-color: $primary_dark;
+	}
+	&:disabled {
+		background-color: $gray_200;
+		color: $gray_500;
+	}
+}

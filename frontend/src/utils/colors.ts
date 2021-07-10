@@ -1,6 +1,11 @@
 import chroma from "chroma-js"
 
-export function pickColorWithBG(index) {
+export interface Color {
+  bg: string
+  fg: string
+}
+
+export function pickColor(index: number): Color {
   const colors = chroma.brewer.Set3
 
   return {
