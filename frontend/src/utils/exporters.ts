@@ -33,7 +33,9 @@ export function exportPointsAsCSV(
 
 export function saveFile(content: string, filename: string) {
   // REF: https://kuroeveryday.blogspot.com/2016/05/file-download-from-browser.html
-  const blob = new Blob([content], { type: mime.getType(filename) });
+  const blob = new Blob([content], {
+    type: mime.getType(filename) || "text/plain",
+  });
 
   const a = document.createElement("a");
   a.download = filename;

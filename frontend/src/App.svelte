@@ -38,10 +38,18 @@
   <main>
     <div class="point-selectors">
       <div>
-        <PointsSelector name="基準画像" bind:data={$basePointSelector} />
+        <PointsSelector
+          label="基準画像"
+          fileDomId="baseImage"
+          bind:data={$basePointSelector}
+        />
       </div>
       <div>
-        <PointsSelector name="変形画像" bind:data={$overPointSelector} />
+        <PointsSelector
+          label="変形画像"
+          fileDomId="overImage"
+          bind:data={$overPointSelector}
+        />
       </div>
     </div>
     <div class="result-canvas" bind:this={resultCanvasDom}>
