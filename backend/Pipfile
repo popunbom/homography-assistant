@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-opencv-python = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 
 [dev-packages]
 flake8 = "*"
 autopep8 = "*"
+opencv-python = "<4.5.2"
 
 [requires]
 python_version = "3.8"

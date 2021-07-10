@@ -39,7 +39,7 @@ export default {
       src: "/api/.*",
       dest: (req, res) => {
         return proxy.web(req, res, {
-          hostname: "localhost",
+          hostname: "backend",
           port: "5000"
         })
       },
@@ -54,7 +54,8 @@ export default {
   },
   devOptions: {
     /* ... */
-    port: 8080,
+    hostname: process.env.HOST || "localhost",
+    port: parseInt(process.env.PORT || 8080),
   },
   buildOptions: {
     /* ... */

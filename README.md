@@ -1,52 +1,26 @@
 # homography-assistant
 
+![main_screenshot](docs/attachments/main_screenshot.png)
+
+OpenCV の `cv2.findHomography()` 関数による射影変換をカンタンに行えるようにするツール
 
 ## Requirements
 
-- Node.js
-- yarn
-  ```bash
-  npm install -g yarn
-  ```
-- Python ( `>3.8` )
-  - Pipenv： `$ pip3 install pipenv`
+- Docker, docker-compose
+## Usage
 
-## Set-Up
-
-### Frontend
-```bash
-cd frontend
-yarn 
+1. docker でアプリケーションを立ち上げる
+```
+$ make start
 ```
 
-### Backend
-```bash
-cd backend
-$ pip3 install pipenv
-$ PIPENV_VENV_IN_PROJECT=true pipenv install
-```
+2. ブラウザで `http://localhost:8000` にアクセス
 
-## Run App
-
-1. Exec following `Frontend` and `Backend`
-2. Open `http://localhost:8080` in browser
-
-### Frontend
-```bash
-cd frontend
-yarn serve
-```
-
-### Backend
-```bash
-cd backend
-pipenv run python3 app.py
-```
+詳細な使い方については [docs/usage.md](docs/usage.md) を参照
 
 ## Author
 - popunbom <fantom0779@gmail.com>
 - rain <@rain9525>
-
 ## Contributor
 - spdbear <@spdbear>
 
