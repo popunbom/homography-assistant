@@ -1,5 +1,7 @@
 # homography-assistant
 
+![main_screenshot](docs/attachments/main_screenshot.png)
+
 OpenCV の `cv2.findHomography()` 関数による射影変換をカンタンに行えるようにするツール
 
 ## Requirements
